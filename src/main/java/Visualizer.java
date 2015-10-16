@@ -36,7 +36,7 @@ public class Visualizer extends PApplet{
 			System.out.println("The only valid configuration is of the form \n"
 					+ "path/to/DOTfile --root-caption ROOTCAPTION\n"
 					+ "Will abort.");
-			System.exit(0);
+			exit();
 		}
 		root = SortedGraph.importFile(args[0], rootCaption);
 		NodeSetManager mngr = new NodeSetManager(root);

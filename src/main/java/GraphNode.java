@@ -1,39 +1,15 @@
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class GraphNode {
 	private String caption;
 	private GraphNode parent;
 	private ArrayList<GraphNode> children = new ArrayList<GraphNode>();
 
-	/** The size of the subtree under the node. For example, a leaf always has treeSize=0.
-	 * 
-	 */
-	private int treeSize;
 	private float xPos;
 	private float yPos;
-	private float radius = (float) 0.0;
-	private ArrayList<ArrayList<Double>> memoryOfMovements;
-	private boolean plotted = false;
-	private boolean alreadyHadACollision = false;
+	private float radius = 0.0f;
 	
-	public boolean isPlotted() {
-		return plotted;
-	}
-
-	public void setPlotted(boolean plotted) {
-		this.plotted = plotted;
-	}
-
-	public ArrayList<ArrayList<Double>> getMemoryOfMovements() {
-		return memoryOfMovements;
-	}
-
-	public void setMemoryOfMovements(ArrayList<ArrayList<Double>> memoryOfMovements) {
-		this.memoryOfMovements = memoryOfMovements;
-	}
-
 	public float getRadius() {
 		return radius;
 	}
@@ -41,13 +17,10 @@ public class GraphNode {
 	public void setRadius(float radius) {
 		this.radius = radius;
 	}
-
-	private boolean checked;
 	
 	public GraphNode(String caption) {
 		super();
 		this.caption = caption;
-		this.setChecked(false);
 	}
 
 	public GraphNode getParent() {
@@ -69,22 +42,6 @@ public class GraphNode {
 	public void addChild(GraphNode child) {
 		this.children.add(child);
 	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
-
-	public int getTreeSize() {
-		return treeSize;
-	}
-
-	public void setTreeSize(int treeSize) {
-		this.treeSize = treeSize;
-	}
 	
 	public float getxPos() {
 		return xPos;
@@ -101,71 +58,11 @@ public class GraphNode {
 	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
-	
-	public boolean isAlreadyHadACollision() {
-		return alreadyHadACollision;
-	}
-
-	public void setAlreadyHadACollision(boolean alreadyHadACollision) {
-		this.alreadyHadACollision = alreadyHadACollision;
-	}
-	
-	/**Recursive
-	 * 
-	 */
-	public int updateTreeSize() {
-		if(children.isEmpty()) { 
-			this.setTreeSize(1);
-			return 1;
-		}
-		int res = 1;
-		int temp = 0;
-		for(GraphNode x : children) {
-			temp = x.updateTreeSize();
-			res += temp;
-		}
-		this.setTreeSize(res);
-		return res;
-	}
 
 	@Override
 	public String toString() {
 		return "GraphNode [caption=" + caption + ", parent=" + parent
-				+ ", children=" + children.size() + ", TreeSize="
-				+ treeSize + ", xPos=" + xPos + ", yPos=" + yPos
-				+ ", radius=" + radius + ", checked=" + checked + "]";
-	}
-	
-	/** Detects an intersection
-	 * @param n the Node with which to check
-	 * @return a double[] with the direction vector in which to move
-	 */
-	public double[] intersect(GraphNode n) {
-		if(this==n) return new double[] {0.0, 0.0};
-		if(Math.sqrt(	Math.pow(this.xPos - n.getxPos(), 2)
-						+ Math.pow(this.yPos - n.getyPos(), 2))
-						<
-						this.radius + n.getRadius()) {
-			return new double[] {n.getxPos()-this.xPos, n.getyPos()-this.yPos};
-		}
-		return new double[] {0.0, 0.0};
-	}
-
-	public double[] getVectorToParent() {
-		if(parent!=null) return new double[] {	this.parent.getxPos() - this.xPos, 
-												this.parent.getyPos() - this.yPos};
-		return new double[] {0.0, 0.0};
-	}
-
-	/**
-	 * @return whole tree under the node as a hashset, including itself
-	 */
-	public HashSet<GraphNode> getWholeTree() {
-		HashSet<GraphNode> res = new HashSet<GraphNode>();
-		res.add(this);
-		for(GraphNode x : this.children) {
-			res.addAll(x.getWholeTree());
-		}
-		return res;
+				+ ", children=" + children.size() + ", xPos=" + xPos + ", yPos=" + yPos
+				+ ", radius=" + radius + "]";
 	}
 }
