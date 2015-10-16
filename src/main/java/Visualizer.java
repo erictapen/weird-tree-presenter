@@ -14,6 +14,7 @@ public class Visualizer extends PApplet{
 	private float ySize;
 	
 	public void setup() {
+		size(1024, 1024);
 		this.mngr = this.initManager();
 	}
 	
@@ -31,17 +32,20 @@ public class Visualizer extends PApplet{
 		String errorMsg = "The only valid configuration is of the form \n"
 				+ "path/to/DOTfile --root-caption ROOTCAPTION\n"
 				+ "Will abort.";
-		if(args.length!=2) {
+		if(args.length!=3) {
 			System.out.println(errorMsg);
 			exit();
 			return null;
 		}
 		GraphNode root;
 		String rootCaption = "";
-		if(args[1] == "-rc" || args[1] == "--root-caption") {
+		if(args[1].equals("-rc") || args[1].equals("--root-caption")) {
 			rootCaption = args[2];
 		} else {
 			System.out.println(errorMsg);
+			System.out.println(args[0]);
+			System.out.println(args[1]);
+			System.out.println(args[2]);
 			exit();
 			return null;
 		}
