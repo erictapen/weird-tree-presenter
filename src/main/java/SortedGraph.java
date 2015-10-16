@@ -3,7 +3,6 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -225,81 +224,4 @@ public class SortedGraph {
 		}		
 	}
 
-	/** Exports the graph! Every data, which is determined by now will be written into the file
-	 * @param root The rootNode where to start. Every other node with posx=0.0, posy=0.0 
-	 * will be seen as without position data!
-	 * @param ofile Filename where to export. File must exist!
-	 * @param minTreeSize 
-	 */
-	public static void exportFile(GraphNode root, String ofile, boolean writeAttributes, int minTreeSize) {
-		if(writeAttributes) {
-			System.out.println("Starting sorted DOT export of " + root.getCaption() + " to " + ofile 
-					+ ". Attributes will be added.");
-		} else {
-			System.out.println("Starting sorted DOT export of " + root.getCaption() + " to " + ofile 
-					+ ". Attributes will be NOT added.");
-		}
-		try{
-			FileWriter writer = new FileWriter(ofile);
-			
-			writer.append(  "digraph " + root.getCaption() + " {\n");
-			ArrayList<GraphNode> togo = new ArrayList<GraphNode>();
-			ArrayList<GraphNode> togo2 = new ArrayList<GraphNode>();
-			togo.addAll(root.getChildren());
-			while(!togo.isEmpty()) {
-				for(GraphNode x : togo) {
-					if(x.getTreeSize() < minTreeSize) continue;  //Exporting only more relevant nodes, if necessary
-					writer.append("\t" + x.getParent().getCaption());
-					if(writeAttributes && x.getParent()==root) {
-						String append = " [caption=\"%caption\", "
-								+ "treeSize=\"%treeSize\", "
-								+ "posx=\"%posx\", "
-								+ "posy=\"%posy\", "
-								+ "radius=\"%radius\"]";
-						append = append.replaceAll("%caption", x.getParent().getCaption());
-						append = append.replaceAll("%treeSize",	Integer.toString(x.getParent().getTreeSize()));
-						append = append.replaceAll("%posx", Double.toString(x.getParent().getxPos()));
-						append = append.replaceAll("%posy", Double.toString(x.getParent().getyPos()));
-						append = append.replaceAll("%radius", Double.toString(x.getParent().getRadius()));
-						writer.append(append);
-					}
-					writer.append(" <-- " + x.getCaption());
-					if(writeAttributes) {
-						String append = " [caption=\"%caption\", "
-								+ "treeSize=\"%treeSize\", "
-								+ "posx=\"%posx\", "
-								+ "posy=\"%posy\", "
-								+ "radius=\"%radius\"]";
-						append = append.replaceAll("%caption", x.getCaption());
-						append = append.replaceAll("%treeSize", Integer.toString(x.getTreeSize()));
-						append = append.replaceAll("%posx", Double.toString(x.getxPos()));
-						append = append.replaceAll("%posy", Double.toString(x.getyPos()));
-						append = append.replaceAll("%radius", Double.toString(x.getRadius()));
-						writer.append(append);
-					}
-					writer.append("\n");
-					togo2.addAll(x.getChildren());
-				}
-				togo.clear();
-				togo.addAll(togo2);
-				togo2.clear();
-			}
-			writer.append("}");
-			writer.close();
-		} catch(IOException e)
-		{
-			System.out.println("Problem occured:");
-			e.printStackTrace();
-		}
-		System.out.println("Export completed.");
-	}
-
-	/** Exports the graph! Every data, which is determined by now will be written into the file
-	 * @param root The rootNode where to start. Every other node with posx=0.0, posy=0.0 
-	 * will be seen as without position data!
-	 * @param ofile Filename where to export. File must exist!
-	 */ 
-	public static void exportFile(GraphNode root, String replaceAll, boolean b) {
-		exportFile(root, replaceAll, b, 1);
-	}
 }
