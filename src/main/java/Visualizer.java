@@ -8,10 +8,10 @@ public class Visualizer extends PApplet{
 
 	
 	private NodeSetManager mngr;
-	private float xCenter;
-	private float yCenter;
-	private float xSize;
-	private float ySize;
+	private float xCenter = 0;
+	private float yCenter = 0;
+	private float xSize = 1024;
+	private float ySize = 1024;
 	
 	public void setup() {
 		size(1024, 1024);
@@ -19,7 +19,9 @@ public class Visualizer extends PApplet{
 	}
 	
 	public void draw() {
+		System.out.print("drawing ");
 		HashSet<GraphNode> toRender = mngr.getRenderableNodes(this.xCenter, this.yCenter, this.xSize, this.ySize);
+		System.out.println(toRender.size() + " nodes.");
 		for(GraphNode x : toRender) {
 			ellipse(x.getxPos()*xSize*width,
 					x.getyPos()*ySize*height,

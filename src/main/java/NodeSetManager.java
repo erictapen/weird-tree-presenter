@@ -15,6 +15,7 @@ public class NodeSetManager {
 
 	public NodeSetManager(GraphNode root) {
 		this.addNodes(root.getWholeTree());
+		System.out.println("Tree cached. There are " + this.map.size() + " Nodes in memory.");
 	}
 
 	public HashSet<GraphNode> getRenderableNodes(float xPos, float yPos, float xSize, float ySize) {
@@ -22,9 +23,10 @@ public class NodeSetManager {
 		for (int i = (int)(-xSize*gridsize); i < (int)(xSize*gridsize); i++) {
 			for (int j = (int)(-ySize*gridsize); j < (int)(ySize*gridsize); j++) {
 				Vector<Integer> vect = new Vector<Integer>(2);
-				vect.set(0, new Integer(i));
-				vect.set(1, new Integer(j));
-				for(GraphNode x : this.map.get(vect)) {
+				vect.add(0, new Integer(i));
+				vect.add(1, new Integer(j));
+				HashSet<GraphNode> nodes = this.map.get(vect);
+				for(GraphNode x : nodes) {
 					if(x.getRadius() > xSize*this.maxNodesize) res.add(x);
 				}
 			}
