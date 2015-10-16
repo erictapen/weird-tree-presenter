@@ -45,40 +45,18 @@ public class SortedGraph {
 		System.out.println("Graph imported. There are " + nodemap.size() + " nodes in memory.");
 		GraphNode root = nodemap.get(rootcaption);
 		if(root==null) return null;
-		boolean graphNeedsUpdateOnLeafSizes = false;
-		boolean graphNeedsPlot = false;
 		ArrayList<GraphNode> togo = new ArrayList<GraphNode>();
 		ArrayList<GraphNode> togo2 = new ArrayList<GraphNode>();
 		togo.add(root);
 		while(!togo.isEmpty()) {
 			for(GraphNode x : togo) {
-				if(x.getTreeSize()==0) graphNeedsUpdateOnLeafSizes = true;
 				if(x.getRadius()==0.0) {
-					graphNeedsPlot = true;	
 				}
 				togo2.addAll(x.getChildren());
 			}
 			togo.clear();
 			togo.addAll(togo2);
 			togo2.clear();
-		}
-		if(root.getRadius()!=1.0) graphNeedsPlot = true;
-		if(graphNeedsUpdateOnLeafSizes) {
-			System.out.println("It seems like, the imported file doesn't have any information about "
-					+ "subTreeSize. This must be updated now.\n"
-					+ "Unfortunately, this is a very stack expensive process. In case of a StackOverflowException "
-					+ "you might need to increase your stack size. Wait a second while the update is running.");
-			root.updateTreeSize();
-			System.out.println("Update completed. Your stack was big enough.");
-		} else {
-			System.out.println("Expensive Updateprocess of subTreeSize was not necessary, due to"
-					+ "enough information in the file!");
-		}
-		if(graphNeedsPlot) {
-			System.out.println("Graph needs plot.");
-		} else {
-			System.out.println("It appears, that the graph is already plotted. If you want to "
-					+ "force plot it, change the radius of root to something different than 1.0.");
 		}
 		System.out.println("Import completed.");
 		return root;
@@ -93,15 +71,15 @@ public class SortedGraph {
 		boolean parentGotAttr = false;
 		boolean childGotAttr = false;
 		int attrTreeSizeParent = 0;
-		double attrPosXParent = 0.0;
-		double attrPosYParent = 0.0;
-		double attrRadiusParent = 0.0;
+		float attrPosXParent = 0.0f;
+		float attrPosYParent = 0.0f;
+		float attrRadiusParent = 0.0f;
 		String attrCaptionParent = null;
 		if(str[0].contains("[")) {
 			attrTreeSizeParent = extractAttributeFromString(str[0], "treeSize", 0);
-			attrPosXParent = extractAttributeFromString(str[0], "posx", 0.0);
-			attrPosYParent = extractAttributeFromString(str[0], "posy", 0.0);
-			attrRadiusParent = extractAttributeFromString(str[0], "radius", 0.0);
+			attrPosXParent = extractAttributeFromString(str[0], "posx", 0.0f);
+			attrPosYParent = extractAttributeFromString(str[0], "posy", 0.0f);
+			attrRadiusParent = extractAttributeFromString(str[0], "radius", 0.0f);
 			attrCaptionParent = extractAttributeFromString(str[0], "caption", null);
 			parentGotAttr = true;
 			str[0] = str[0].substring(0, str[0].indexOf(" ["));
@@ -109,16 +87,16 @@ public class SortedGraph {
 		if(attrCaptionParent == null) attrCaptionParent = str[0];
 		
 		int attrTreeSize = 0;
-		double attrPosX = 0.0;
-		double attrPosY = 0.0;
-		double attrRadius = 0.0;
+		float attrPosX = 0.0f;
+		float attrPosY = 0.0f;
+		float attrRadius = 0.0f;
 		String attrCaption = null;
 		if(str.length!=2) return;
 		if(str[1].contains("[")) {  //Attributes are read out from string
 			attrTreeSize = extractAttributeFromString(str[1], "treeSize", 0);
-			attrPosX = extractAttributeFromString(str[1], "posx", 0.0);
-			attrPosY = extractAttributeFromString(str[1], "posy", 0.0);
-			attrRadius = extractAttributeFromString(str[1], "radius", 0.0);
+			attrPosX = extractAttributeFromString(str[1], "posx", 0.0f);
+			attrPosY = extractAttributeFromString(str[1], "posy", 0.0f);
+			attrRadius = extractAttributeFromString(str[1], "radius", 0.0f);
 			attrCaption = extractAttributeFromString(str[1], "caption", null);
 			childGotAttr = true;
 			str[1] = str[1].substring(0, str[1].indexOf(" ["));
@@ -138,13 +116,11 @@ public class SortedGraph {
 		child.setParent(parent);
 		parent.addChild(child);
 		if(parentGotAttr) {
-			if(attrTreeSizeParent!=0) parent.setTreeSize(attrTreeSizeParent);
 			parent.setxPos(attrPosXParent);
 			parent.setyPos(attrPosYParent);
 			parent.setRadius(attrRadiusParent);
 		}
 		if(childGotAttr) {
-			child.setTreeSize(attrTreeSize);
 			child.setxPos(attrPosX);
 			child.setyPos(attrPosY);
 			child.setRadius(attrRadius);
@@ -156,10 +132,10 @@ public class SortedGraph {
 	 * @param key The key of the desired attribute
 	 * @return The desired double value, or defaultVal if no corresponding value could be found
 	 */
-	private static Double extractAttributeFromString(String str, String key, double defaultVal) {
+	private static Float extractAttributeFromString(String str, String key, float defaultVal) {
 		String res = extractAttributeFromString(str, key);
 		try{
-			return Double.parseDouble(res);	
+			return (float) Double.parseDouble(res);	
 		} catch(NumberFormatException e) {
 			return defaultVal;
 		} catch(NullPointerException e) {
