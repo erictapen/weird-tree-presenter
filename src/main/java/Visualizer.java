@@ -28,15 +28,22 @@ public class Visualizer extends PApplet{
 	}
 	
 	public NodeSetManager initManager() {
+		String errorMsg = "The only valid configuration is of the form \n"
+				+ "path/to/DOTfile --root-caption ROOTCAPTION\n"
+				+ "Will abort.";
+		if(args.length!=2) {
+			System.out.println(errorMsg);
+			exit();
+			return null;
+		}
 		GraphNode root;
 		String rootCaption = "";
 		if(args[1] == "-rc" || args[1] == "--root-caption") {
 			rootCaption = args[2];
 		} else {
-			System.out.println("The only valid configuration is of the form \n"
-					+ "path/to/DOTfile --root-caption ROOTCAPTION\n"
-					+ "Will abort.");
+			System.out.println(errorMsg);
 			exit();
+			return null;
 		}
 		root = SortedGraph.importFile(args[0], rootCaption);
 		NodeSetManager mngr = new NodeSetManager(root);
