@@ -11,6 +11,7 @@ public class NodeSetManager {
 	 * 
 	 */
 	private float gridsize = 0.1f;
+	private float maxNodesize = 0.1f;
 
 	public NodeSetManager(GraphNode root) {
 		this.addNodes(root.getWholeTree());
@@ -23,7 +24,9 @@ public class NodeSetManager {
 				Vector<Integer> vect = new Vector<Integer>(2);
 				vect.set(0, new Integer(i));
 				vect.set(1, new Integer(j));
-				res.addAll(this.map.get(vect));
+				for(GraphNode x : this.map.get(vect)) {
+					if(x.getRadius() > xSize*this.maxNodesize) res.add(x);
+				}
 			}
 		}
 		return res;
