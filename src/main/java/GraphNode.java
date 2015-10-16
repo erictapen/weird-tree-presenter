@@ -1,5 +1,7 @@
 
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GraphNode {
 	private String caption;
@@ -57,6 +59,18 @@ public class GraphNode {
 
 	public void setyPos(float yPos) {
 		this.yPos = yPos;
+	}
+	
+	/**
+	 * @return whole tree under the node as a hashset, including itself
+	 */
+	public HashSet<GraphNode> getWholeTree() {
+		HashSet<GraphNode> res = new HashSet<GraphNode>();
+		res.add(this);
+		for(GraphNode x : this.children) {
+			res.addAll(x.getWholeTree());
+		}
+		return res;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import processing.core.PApplet;
 
@@ -18,7 +18,7 @@ public class Visualizer extends PApplet{
 	}
 	
 	public void draw() {
-		ArrayList<GraphNode> toRender = mngr.getRenderableNodes(this.xCenter, this.yCenter, this.xSize, this.ySize);
+		HashSet<GraphNode> toRender = mngr.getRenderableNodes(this.xCenter, this.yCenter, this.xSize, this.ySize);
 		for(GraphNode x : toRender) {
 			ellipse(x.getxPos()*xSize*width,
 					x.getyPos()*ySize*height,
