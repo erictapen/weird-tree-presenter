@@ -26,6 +26,7 @@ public class NodeSetManager {
 				vect.add(0, new Integer(i));
 				vect.add(1, new Integer(j));
 				HashSet<GraphNode> nodes = this.map.get(vect);
+				if(nodes==null) continue;
 				for(GraphNode x : nodes) {
 					if(x.getRadius() > xSize*this.maxNodesize) res.add(x);
 				}
