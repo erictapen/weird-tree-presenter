@@ -70,13 +70,11 @@ public class SortedGraph {
 		String[] str = line.split(" <-- ");
 		boolean parentGotAttr = false;
 		boolean childGotAttr = false;
-		int attrTreeSizeParent = 0;
 		float attrPosXParent = 0.0f;
 		float attrPosYParent = 0.0f;
 		float attrRadiusParent = 0.0f;
 		String attrCaptionParent = null;
 		if(str[0].contains("[")) {
-			attrTreeSizeParent = extractAttributeFromString(str[0], "treeSize", 0);
 			attrPosXParent = extractAttributeFromString(str[0], "posx", 0.0f);
 			attrPosYParent = extractAttributeFromString(str[0], "posy", 0.0f);
 			attrRadiusParent = extractAttributeFromString(str[0], "radius", 0.0f);
@@ -86,14 +84,12 @@ public class SortedGraph {
 		}
 		if(attrCaptionParent == null) attrCaptionParent = str[0];
 		
-		int attrTreeSize = 0;
 		float attrPosX = 0.0f;
 		float attrPosY = 0.0f;
 		float attrRadius = 0.0f;
 		String attrCaption = null;
 		if(str.length!=2) return;
 		if(str[1].contains("[")) {  //Attributes are read out from string
-			attrTreeSize = extractAttributeFromString(str[1], "treeSize", 0);
 			attrPosX = extractAttributeFromString(str[1], "posx", 0.0f);
 			attrPosY = extractAttributeFromString(str[1], "posy", 0.0f);
 			attrRadius = extractAttributeFromString(str[1], "radius", 0.0f);
@@ -148,6 +144,7 @@ public class SortedGraph {
 	 * @param key The key of the desired attribute
 	 * @return The desired double value, or defaultVal if no corresponding value could be found
 	 */
+	@SuppressWarnings("unused")
 	private static Integer extractAttributeFromString(String str, String key, int defaultVal) {
 		String res = extractAttributeFromString(str, key);
 		try{
