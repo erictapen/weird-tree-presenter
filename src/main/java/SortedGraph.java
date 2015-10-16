@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Import and Export functionality for .dot-files which are already sorted
+/** Importfunctionality for .dot-files which are already sorted
  * and are therefore faster readable. There are only .dot-files with a single graph allowed!
  * @author justin
  *

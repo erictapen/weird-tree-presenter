@@ -1,9 +1,12 @@
+import processing.core.PApplet;
+
 
 public class EntryPoint {
 
+	private static GraphNode root;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		PApplet.main("Visualizer", args);
 	}
 
 }

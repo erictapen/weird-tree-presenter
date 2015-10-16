@@ -11,9 +11,9 @@ public class GraphNode {
 	 * 
 	 */
 	private int treeSize;
-	private double xPos;
-	private double yPos;
-	private double radius = 0.0;
+	private float xPos;
+	private float yPos;
+	private float radius = (float) 0.0;
 	private ArrayList<ArrayList<Double>> memoryOfMovements;
 	private boolean plotted = false;
 	private boolean alreadyHadACollision = false;
@@ -34,11 +34,11 @@ public class GraphNode {
 		this.memoryOfMovements = memoryOfMovements;
 	}
 
-	public double getRadius() {
+	public float getRadius() {
 		return radius;
 	}
 
-	public void setRadius(double radius) {
+	public void setRadius(float radius) {
 		this.radius = radius;
 	}
 
@@ -86,19 +86,19 @@ public class GraphNode {
 		this.treeSize = treeSize;
 	}
 	
-	public double getxPos() {
+	public float getxPos() {
 		return xPos;
 	}
 
-	public void setxPos(double xPos) {
+	public void setxPos(float xPos) {
 		this.xPos = xPos;
 	}
 
-	public double getyPos() {
+	public float getyPos() {
 		return yPos;
 	}
 
-	public void setyPos(double yPos) {
+	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
 	
