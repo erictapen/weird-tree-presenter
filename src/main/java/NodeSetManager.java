@@ -17,7 +17,8 @@ public class NodeSetManager {
 
 	public NodeSetManager(GraphNode root) {
 		this.addNodes(root.getWholeTree());
-		System.out.println("Tree cached. There are " + this.map.size() + " Nodes in memory.");
+		System.out.println("Tree cached. There are " + this.map.size() + " cells and " + this.leafs.size() 
+				+ " leafs in memory.");
 	}
 
 	public HashSet<GraphNode> getRenderableNodes(float xPos, float yPos, float xSize, float ySize) {
