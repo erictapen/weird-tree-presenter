@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
@@ -6,6 +7,7 @@ import java.util.Vector;
 
 public class NodeSetManager {
 	private HashMap<Vector<Integer>, HashSet<GraphNode>> map = new HashMap<Vector<Integer>, HashSet<GraphNode>>();
+	private ArrayList<GraphNode> leafs = new ArrayList<GraphNode>();
 	
 	/** This is the length of a grid cell, in world units.
 	 * 
@@ -63,11 +65,16 @@ public class NodeSetManager {
 					}
 				}
 			}
+			if(node.getChildren().size()==0) this.leafs.add(node);
 		}
 	}
 
 	public void setGridsize(float gridsize) {
 		this.gridsize = gridsize;
+	}
+	
+	public GraphNode getRandomNode() {
+		return leafs.get((int)(Math.random()*leafs.size()));
 	}
 
 }

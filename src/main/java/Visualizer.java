@@ -16,12 +16,13 @@ public class Visualizer extends PApplet{
 	private float ySize = 1.0f;
 	
 	private HashSet<GraphNode> toRender;
+	private GraphNode follow;
 	
 	public void setup() {
-		size(512, 512);
+		size(800, 600);
 		background(0);
 		stroke(255);
-		fill(255);
+		noFill();
 		this.mngr = this.initManager();
 	}
 	
