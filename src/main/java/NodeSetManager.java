@@ -20,8 +20,8 @@ public class NodeSetManager {
 
 	public HashSet<GraphNode> getRenderableNodes(float xPos, float yPos, float xSize, float ySize) {
 		HashSet<GraphNode> res = new HashSet<GraphNode>();
-		for (int i = (int)(xPos-xSize/gridsize); i < (int)(xPos+xSize/gridsize); i++) {
-			for (int j = (int)(yPos-ySize/gridsize); j < (int)(yPos+ySize/gridsize); j++) {
+		for (int i = (int)((xPos-xSize)/gridsize); i < (int)((xPos+xSize)/gridsize); i++) {
+			for (int j = (int)((yPos-ySize)/gridsize); j < (int)((yPos+ySize)/gridsize); j++) {
 				Vector<Integer> vect = new Vector<Integer>(2);
 				vect.add(0, new Integer(i));
 				vect.add(1, new Integer(j));

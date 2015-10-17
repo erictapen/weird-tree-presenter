@@ -35,7 +35,7 @@ public class Visualizer extends PApplet{
 					(x.getRadius()/xSize)*width*2.0f,
 					(x.getRadius()/xSize)*width*2.0f);
 		}
-		xCenter += 0.002;
+		xCenter += 0.01;
 		yCenter += 0.003;
 	}
 	
