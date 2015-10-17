@@ -7,7 +7,7 @@ import processing.core.PApplet;
 public class Visualizer extends PApplet{
 
 	private final float movSpeed = 0.002f;
-	private final float followUntilDistance = 0.002f;
+	private final float followUntilDistance = 0.02f;
 	private final float nodeSize = 2.0f;
 	
 	private NodeSetManager mngr;
@@ -43,6 +43,8 @@ public class Visualizer extends PApplet{
 		System.out.println("drawing " + toRender.size() + " nodes at " + xCenter + "," + yCenter);
 		System.out.println("Going to " + this.follow.getCaption());
 		for(GraphNode x : toRender) {
+			if(x==follow) fill(255);
+			else noFill();
 			ellipse(((x.getxPos()-xCenter)/xSize) * width + width/2.0f,
 					((x.getyPos()-yCenter)/ySize) * height + height/2.0f,
 					(x.getRadius()/xSize)*width*2.0f,
@@ -83,12 +85,12 @@ public class Visualizer extends PApplet{
 		}
 		if(dist(this.follow.getxPos(), this.follow.getyPos(), this.xCenter, this.yCenter) < this.followUntilDistance) {
 			this.follow = this.follow.getParent();
-			if(this.follow!=null) return;
+			if(this.follow==null) return;
 			this.xGoal = this.follow.getxPos();
 			this.yGoal = this.follow.getyPos();
 			this.sizeGoal = this.follow.getRadius() * this.nodeSize;
 		}
-		float rad = atan2(this.xCenter - this.xGoal, this.yCenter - this.yGoal);
+		float rad = atan2(this.xGoal - this.xCenter,  this.yGoal - this.yCenter);
 		this.xCenter += sin(rad)*this.movSpeed;
 		this.yCenter += cos(rad)*this.movSpeed;
 		timer++;
