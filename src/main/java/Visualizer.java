@@ -6,8 +6,8 @@ import processing.core.PApplet;
 @SuppressWarnings("serial")
 public class Visualizer extends PApplet{
 
-	private final float movSpeed = 0.01f;
-	private final float followUntilDistance = 0.02f;
+	private final float movSpeed = 0.002f;
+	private final float followUntilDistance = 0.002f;
 	private final float nodeSize = 2.0f;
 	
 	private NodeSetManager mngr;
@@ -32,6 +32,8 @@ public class Visualizer extends PApplet{
 		noFill();
 		this.mngr = this.initManager();
 		this.follow = this.mngr.getRandomNode();
+		this.xCenter = this.follow.getxPos();
+		this.yCenter = this.follow.getyPos();
 	}
 	
 	public void draw() {
@@ -39,14 +41,13 @@ public class Visualizer extends PApplet{
 		handlePosition();
 		toRender = mngr.getRenderableNodes(this.xCenter, this.yCenter, this.xSize, this.ySize);
 		System.out.println("drawing " + toRender.size() + " nodes at " + xCenter + "," + yCenter);
+		System.out.println("Going to " + this.follow.getCaption());
 		for(GraphNode x : toRender) {
 			ellipse(((x.getxPos()-xCenter)/xSize) * width + width/2.0f,
 					((x.getyPos()-yCenter)/ySize) * height + height/2.0f,
 					(x.getRadius()/xSize)*width*2.0f,
 					(x.getRadius()/xSize)*width*2.0f);
 		}
-		xSize += 0.01;
-		ySize += 0.01;
 	}
 	
 	private NodeSetManager initManager() {
@@ -82,7 +83,7 @@ public class Visualizer extends PApplet{
 		}
 		if(dist(this.follow.getxPos(), this.follow.getyPos(), this.xCenter, this.yCenter) < this.followUntilDistance) {
 			this.follow = this.follow.getParent();
-			if(this.follow!=null) return; 
+			if(this.follow!=null) return;
 			this.xGoal = this.follow.getxPos();
 			this.yGoal = this.follow.getyPos();
 			this.sizeGoal = this.follow.getRadius() * this.nodeSize;
