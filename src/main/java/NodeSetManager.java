@@ -11,7 +11,7 @@ public class NodeSetManager {
 	 * 
 	 */
 	private float gridsize = 0.1f;
-	private float maxNodesize = 0.1f;
+	private float maxNodesize = 0.01f;
 
 	public NodeSetManager(GraphNode root) {
 		this.addNodes(root.getWholeTree());
@@ -20,17 +20,17 @@ public class NodeSetManager {
 
 	public HashSet<GraphNode> getRenderableNodes(float xPos, float yPos, float xSize, float ySize) {
 		HashSet<GraphNode> res = new HashSet<GraphNode>();
-		for (int i = (int)(-xSize/gridsize); i < (int)(xSize/gridsize); i++) {
-			for (int j = (int)(-ySize/gridsize); j < (int)(ySize/gridsize); j++) {
+		for (int i = (int)(xPos-xSize/gridsize); i < (int)(xPos+xSize/gridsize); i++) {
+			for (int j = (int)(yPos-ySize/gridsize); j < (int)(yPos+ySize/gridsize); j++) {
 				Vector<Integer> vect = new Vector<Integer>(2);
 				vect.add(0, new Integer(i));
 				vect.add(1, new Integer(j));
 				HashSet<GraphNode> nodes = this.map.get(vect);
 				if(nodes==null) continue;
 				
-				//TODO delete debug msg
-				if(nodes.size()!=0) System.out.println("accessing cell " + i + "," 
-				+ j + " with " + nodes.size() + " nodes");
+//				//TODO delete debug msg
+//				if(nodes.size()!=0) System.out.println("accessing cell " + i + "," 
+//				+ j + " with " + nodes.size() + " nodes");
 				
 				for(GraphNode x : nodes) {
 					if(x.getRadius() > xSize*this.maxNodesize) res.add(x);

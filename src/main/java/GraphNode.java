@@ -75,7 +75,10 @@ public class GraphNode {
 
 	@Override
 	public String toString() {
-		return "GraphNode [caption=" + caption + ", parent=" + parent
+		String pcaption;
+		if (this.parent==null) pcaption = "null";
+		else pcaption = parent.getCaption();
+		return "GraphNode [caption=" + caption + ", parent=" + pcaption
 				+ ", children=" + children.size() + ", xPos=" + xPos + ", yPos=" + yPos
 				+ ", radius=" + radius + "]";
 	}
