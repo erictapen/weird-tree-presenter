@@ -30,13 +30,13 @@ public class Visualizer extends PApplet{
 		toRender = mngr.getRenderableNodes(this.xCenter, this.yCenter, this.xSize, this.ySize);
 		System.out.println("drawing " + toRender.size() + " nodes at " + xCenter + "," + yCenter);
 		for(GraphNode x : toRender) {
-			ellipse(((x.getxPos()-xCenter)/xSize) * width,
-					((x.getyPos()-yCenter)/ySize) * height,
+			ellipse(((x.getxPos()-xCenter)/xSize) * width + width/2.0f,
+					((x.getyPos()-yCenter)/ySize) * height + height/2.0f,
 					(x.getRadius()/xSize)*width*2.0f,
 					(x.getRadius()/xSize)*width*2.0f);
 		}
-		xCenter += 0.01;
-		yCenter += 0.003;
+		xSize += 0.01;
+		ySize += 0.01;
 	}
 	
 	public NodeSetManager initManager() {
